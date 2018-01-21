@@ -5,6 +5,11 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# curb
+gem 'curb', '~> 0.9.3'
+# CareerJet
+gem 'careerjet-api-client', :require => "careerjet/api_client"
+
 # SuckerPunch
 gem 'sucker_punch', '~> 2.0'
 

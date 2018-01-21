@@ -1,10 +1,11 @@
 class ApplicationsController < ApplicationController
   before_action :set_application, only: [:show, :update, :destroy]
 
+  # Limited only to the current users applications
   # GET /applications
   # GET /applications.json
   def index
-    @applications = Application.all
+    @applications = authorized_user.applications
   end
 
   # GET /applications/1
