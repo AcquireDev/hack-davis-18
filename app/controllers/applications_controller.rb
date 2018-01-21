@@ -5,7 +5,11 @@ class ApplicationsController < BaseController
   # GET /applications
   # GET /applications.json
   def index
-    @applications = authorized_user.applications
+    if(application_params.has_key?(:new))
+      @applications = authorized_user.applications.where(status: "new")
+    else
+      @applications = authorized_user.applications
+    end
   end
 
   # GET /applications/1
@@ -49,6 +53,6 @@ class ApplicationsController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def application_params
-      params.permit(:listing_id, :applied, :status, :notes, :user_id)
+      params.permit(:listing_id, :applied, :status, :notes, :user_id, :new)
     end
 end
