@@ -1,5 +1,5 @@
 class UsersController < BaseController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:update, :destroy]
   skip_before_action :authenticate_user, only: [:create]
 
   # GET /users
@@ -9,6 +9,7 @@ class UsersController < BaseController
 
   # GET /users/1
   def show
+    @user = authorized_user
   end
 
   # POST /users
