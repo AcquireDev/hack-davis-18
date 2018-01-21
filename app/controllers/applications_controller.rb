@@ -6,9 +6,9 @@ class ApplicationsController < BaseController
   # GET /applications.json
   def index
     if(application_params.has_key?(:new))
-      @applications = authorized_user.applications.where(status: "new")
+      @applications = authorized_user.applications.where(status: "new").order(:applied)
     else
-      @applications = authorized_user.applications
+      @applications = authorized_user.applications.where.not(status: "new").order(:applied)
     end
   end
 
