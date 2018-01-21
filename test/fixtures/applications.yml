@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  listing: one
+  applied: false
+  status: MyString
+  notes: MyString
+  user: one
+
+two:
+  listing: two
+  applied: false
+  status: MyString
+  notes: MyString
+  user: two

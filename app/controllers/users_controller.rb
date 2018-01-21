@@ -7,7 +7,7 @@ class UsersController < BaseController
     @users = User.all
   end
 
-  # GET /users/1
+  # GET /current_user
   def show
     @user = authorized_user
   end

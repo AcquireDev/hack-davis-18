@@ -5,6 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# SuckerPunch
+gem 'sucker_punch', '~> 2.0'
+
 # Dot env file
 gem 'dotenv-rails', groups: [:development, :test]
 

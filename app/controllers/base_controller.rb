@@ -19,7 +19,7 @@ class BaseController < ApplicationController
       if @authorized_user && @authorized_user.id == user_id
         return @authorized_user
       else
-        @authorized_user ||= User.find(user_id)
+        @authorized_user ||= User.find_by_id(user_id)
       end
     else
     end
