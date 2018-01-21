@@ -58,6 +58,9 @@ namespace :listings do
     end
   end
 
+    log.info ""
+    log.info ""
+    log.info "Updating users..."
     # Run a job to create applications for all of the users
     User.find_in_batches do |batch|
       batch.each do |user|
