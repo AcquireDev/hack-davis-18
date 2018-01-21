@@ -17,11 +17,11 @@ namespace :listings do
 
     cj_api_client = Careerjet::APIClient.new(:locale=> :en_US)
 
-    # locations = ['San Francisco', 'Mountain View', 'Palo Alto',
-    #    'San Jose', 'Sunnyvale', 'Redwood City', 'Menlo Park',
-    #    'Cupertino', 'Santa Clara', 'Fremont', 'San Mateo']
+    locations = ['San Francisco', 'Mountain View', 'Palo Alto',
+       'San Jose', 'Sunnyvale', 'Redwood City', 'Menlo Park',
+       'Cupertino', 'Santa Clara', 'Fremont', 'San Mateo']
 
-   locations = ['San Mateo']
+   # locations = ['San Mateo']
 
    locations.each do |location|
      log.info ""
