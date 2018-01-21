@@ -13,6 +13,9 @@ class AddApplicationsJob
 
       user = User.find_by_id(user_id)
 
+      prev_new = Application.where(user_id: user.id, status: "new")
+      prev_new.update_all(status: "")
+
       # Get full list of all current listings by the user
       current_listings = Hash.new
 

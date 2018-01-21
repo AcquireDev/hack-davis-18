@@ -17,9 +17,11 @@ namespace :listings do
 
     cj_api_client = Careerjet::APIClient.new(:locale=> :en_US)
 
-    locations = ['San Francisco', 'Mountain View', 'Palo Alto',
-       'San Jose', 'Sunnyvale', 'Redwood City', 'Menlo Park',
-       'Cupertino', 'Santa Clara', 'Fremont', 'San Mateo']
+    # locations = ['San Francisco', 'Mountain View', 'Palo Alto',
+    #    'San Jose', 'Sunnyvale', 'Redwood City', 'Menlo Park',
+    #    'Cupertino', 'Santa Clara', 'Fremont', 'San Mateo']
+
+   locations = ['San Mateo']
 
    locations.each do |location|
      log.info ""
@@ -47,7 +49,7 @@ namespace :listings do
 
       results.jobs.each do |job|
         final_url = RedirectFollow.get_url(job.url)
-        log.info "Finalized URL: #{final_url}"
+        # log.info "Finalized URL: #{final_url}"
         listing = Listing.create_listing(job.title, job.description, nil, job.company, final_url)
         log.info "Adding: #{listing.job_title}" if listing
       end
@@ -57,5 +59,10 @@ namespace :listings do
   end
 
     # Run a job to create applications for all of the users
+    User.find_in_batches do |batch|
+      batch.each do |user|
+        AddApplicationsJob.perform_async(user.id)
+      end
+    end
   end
 end

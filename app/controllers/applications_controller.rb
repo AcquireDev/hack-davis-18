@@ -1,4 +1,4 @@
-class ApplicationsController < ApplicationController
+class ApplicationsController < BaseController
   before_action :set_application, only: [:show, :update, :destroy]
 
   # Limited only to the current users applications
