@@ -4,7 +4,7 @@ class Application < ApplicationRecord
   after_update :remove_new
 
   def remove_new
-    if self.status == new
+    if self.status == "new"
       self.update_attributes(status: "")
     end
   end
