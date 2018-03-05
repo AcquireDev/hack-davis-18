@@ -53,6 +53,6 @@ class ApplicationsController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def application_params
-      params.permit(:listing_id, :applied, :status, :notes, :user_id, :new)
+      params.permit(:listing_id, :applied, :status, :notes, :user_id, :new, :stage)
     end
 end
