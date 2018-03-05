@@ -7,6 +7,8 @@ class ApplicationsController < BaseController
   def index
     if(application_params.has_key?(:new))
       @applications = authorized_user.applications.where(status: "new").order(:applied)
+    elsif(application_params.has_key?(:stage))
+      @applications = authorized_user.applications.where(stage: application_params["stage"])
     else
       @applications = authorized_user.applications.where.not(status: "new").order(:applied)
     end
@@ -33,6 +35,9 @@ class ApplicationsController < BaseController
   # PATCH/PUT /applications/1.json
   def update
     if @application.update(application_params)
+      if @application.not_applied? && @application.applied
+        @application.update_attributes(stage: applied)
+      end
       render :show, status: :ok, location: @application
     else
       render json: @application.errors, status: :unprocessable_entity
