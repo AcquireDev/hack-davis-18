@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true
 
-  has_many :applications
+  has_many :applications, dependent: :destroy
 
   def load_applications
     AddApplicationsJob.perform_async(self.id)

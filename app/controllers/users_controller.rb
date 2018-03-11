@@ -17,7 +17,8 @@ class UsersController < BaseController
     @user = User.new(user_params)
 
     if @user.save
-      render :show, status: :created
+      jwt = Auth.issue(user: @user.id)
+      render json: {jwt: jwt}, status: :created
     else
       render json: {msg: "Unable to create user", errors: @user.errors}, status: :unprocessable_entity
     end
