@@ -8,7 +8,13 @@ class ApplicationsController < BaseController
     if(application_params.has_key?(:new))
       @applications = authorized_user.applications.where(status: "new").order(:applied)
     elsif(application_params.has_key?(:stage))
-      @applications = authorized_user.applications
+      @not_applied = authorized_user.applications.where(stage: "not_applied")
+      @applied = authorized_user.applications.where(stage: "applied")
+      @interviewing = authorized_user.applications.where(stage: "interviewing")
+      @hidden = authorized_user.applications.where(stage: "hidden")
+      @rejected = authorized_user.applications.where(stage: "rejected")
+      @offer = authorized_user.applications.where(stage: "offer")
+      @accepted = authorized_user.applications.where(stage: "accepted")
     else
       @applications = authorized_user.applications.where.not(status: "new").order(:applied)
     end
