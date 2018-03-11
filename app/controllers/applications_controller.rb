@@ -35,9 +35,10 @@ class ApplicationsController < BaseController
   # PATCH/PUT /applications/1.json
   def update
     if @application.update(application_params)
-      if @application.not_applied? && @application.applied
-        @application.update_attributes(stage: applied)
+      if application_params.has_key?("applied") && application_params["applied"]
+        @application.update_attributes(stage: "applied")
       end
+
       render :show, status: :ok, location: @application
     else
       render json: @application.errors, status: :unprocessable_entity

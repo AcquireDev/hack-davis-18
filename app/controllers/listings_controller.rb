@@ -38,6 +38,7 @@ class ListingsController < ApplicationController
     end
 
     if @listing.save
+      ReconcileListingJob.perform_async(@listing)
       render :show, status: :created, location: @listing
     else
       render json: @listing.errors, status: :unprocessable_entity
