@@ -1,5 +1,6 @@
 class Listing < ApplicationRecord
   belongs_to :company, optional: true
+  has_many :applications, dependent: :destroy
 
   def self.create_listing(job_title, description, deadline, company_name, url)
     # Check for duplicates
