@@ -5,19 +5,18 @@ class ApplicationsController < BaseController
   # GET /applications
   # GET /applications.json
   def index
-    if(application_params.has_key?(:new))
-      @applications = authorized_user.applications.where(status: "new").order(:applied)
-    elsif(application_params.has_key?(:stage))
-      @not_applied = authorized_user.applications.where(stage: "not_applied").ordered
-      @applied = authorized_user.applications.where(stage: "applied").ordered
-      @interviewing = authorized_user.applications.where(stage: "interviewing").ordered
-      @hidden = authorized_user.applications.where(stage: "hidden").ordered
-      @rejected = authorized_user.applications.where(stage: "rejected").ordered
-      @offer = authorized_user.applications.where(stage: "offer").ordered
-      @accepted = authorized_user.applications.where(stage: "accepted").ordered
+    if(application_params.has_key?(:job_board_id))
+      applications = authorized_user.applications.where(job_board_id: application_params[:job_board_id])
     else
-      @applications = authorized_user.applications.where.not(status: "new").order(:applied)
+      applications = authorized_user.applications
     end
+    @not_applied = applications.where(stage: "not_applied").ordered
+    @applied = aapplications.where(stage: "applied").ordered
+    @interviewing = applications.where(stage: "interviewing").ordered
+    @hidden = applications.where(stage: "hidden").ordered
+    @rejected = applications.where(stage: "rejected").ordered
+    @offer = applications.where(stage: "offer").ordered
+    @accepted = applications.where(stage: "accepted").ordered
   end
 
   # GET /applications/1
@@ -65,6 +64,6 @@ class ApplicationsController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def application_params
-      params.permit(:listing_id, :applied, :status, :notes, :user_id, :new, :stage)
+      params.permit(:listing_id, :applied, :status, :notes, :user_id, :new, :stage, :job_board_id)
     end
 end

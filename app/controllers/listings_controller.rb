@@ -26,14 +26,16 @@ class ListingsController < ApplicationController
         description: listing_params[:description],
         deadline: listing_params[:deadline],
         job_title: listing_params[:job_title],
-        url: listing_params[:url]
+        url: listing_params[:url],
+        job_board_id: listing_params[:job_board_id]
       })
     else
       @listing = Listing.new({
         description: listing_params[:description],
         deadline: listing_params[:deadline],
         job_title: listing_params[:job_title],
-        url: listing_params[:url]
+        url: listing_params[:url],
+        job_board_id: listing_params[:job_board_id]
       })
     end
 
@@ -69,6 +71,6 @@ class ListingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      params.permit(:job_title, :description, :deadline, :company_id, :company_name, :url)
+      params.permit(:job_title, :description, :deadline, :company_id, :company_name, :url, :job_board_id)
     end
 end

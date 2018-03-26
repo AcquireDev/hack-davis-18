@@ -1,8 +1,9 @@
 class Listing < ApplicationRecord
   belongs_to :company, optional: true
+  belongs_to :job_board
   has_many :applications, dependent: :destroy
 
-  def self.create_listing(job_title, description, deadline, company_name, url)
+  def self.create_listing(job_board_id, job_title, description, deadline, company_name, url)
     # Check for duplicates
     company = Company.find_by_name(company_name)
     if company
@@ -14,6 +15,7 @@ class Listing < ApplicationRecord
 
     company = Company.find_or_create_by(name: company_name)
     listing = Listing.new({
+      job_board_id: job_board_id,
       company_id: company.id,
       description: description,
       deadline: deadline,

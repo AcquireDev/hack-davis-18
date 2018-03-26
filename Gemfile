@@ -7,6 +7,10 @@ end
 
 # curb
 gem 'curb', '~> 0.9.3'
+
+# Settings
+gem 'ledermann-rails-settings'
+
 # CareerJet
 gem 'careerjet-api-client', :require => "careerjet/api_client"
 
