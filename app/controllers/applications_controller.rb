@@ -11,7 +11,7 @@ class ApplicationsController < BaseController
       applications = authorized_user.applications
     end
     @not_applied = applications.where(stage: "not_applied").ordered
-    @applied = application.where(stage: "applied").ordered
+    @applied = applications.where(stage: "applied").ordered
     @interviewing = applications.where(stage: "interviewing").ordered
     @hidden = applications.where(stage: "hidden").ordered
     @rejected = applications.where(stage: "rejected").ordered
