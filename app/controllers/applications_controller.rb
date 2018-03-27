@@ -6,7 +6,7 @@ class ApplicationsController < BaseController
   # GET /applications.json
   def index
     if(application_params.has_key?(:job_board_id))
-      applications = authorized_user.applications.where(job_board_id: application_params[:job_board_id])
+      applications = authorized_user.applications.joins(:listing).where("listings.job_board_id = ?", application_params[:job_board_id])
     else
       applications = authorized_user.applications
     end

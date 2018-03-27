@@ -1,6 +1,7 @@
 class Application < ApplicationRecord
   belongs_to :listing
   belongs_to :user
+  has_one :job_board, through: :listing
   has_one :company, through: :listing
   after_update :remove_new
 
