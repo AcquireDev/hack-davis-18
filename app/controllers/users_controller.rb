@@ -1,5 +1,5 @@
 class UsersController < BaseController
-  before_action :set_user, only: [:update, :destroy]
+  before_action :set_user, only: [:update, :destroy, :set_board_id]
   skip_before_action :authenticate_user, only: [:create]
 
   # GET /users
@@ -38,6 +38,11 @@ class UsersController < BaseController
     @user.destroy
   end
 
+  # PATCH  /user_preferences/:id/set_job_board
+  def set_board_id
+    user.settings(:job_search).update_attributes! :job_board_id => user_params[:board_id]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -46,6 +51,6 @@ class UsersController < BaseController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.permit(:email, :password)
+      params.permit(:email, :password, :board_id)
     end
 end
