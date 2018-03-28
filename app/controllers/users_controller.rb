@@ -40,7 +40,7 @@ class UsersController < BaseController
 
   # PATCH  /user_preferences/:id/set_job_board
   def set_board_id
-    user.settings(:job_search).update_attributes! :job_board_id => user_params[:board_id]
+    @user.settings(:job_search).update_attributes! :job_board_id => user_params[:board_id]
     render :show, status: :ok
   end
 
