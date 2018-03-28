@@ -9,7 +9,7 @@ class ImportSpreadsheetJob
   def perform(url)
     ActiveRecord::Base.connection_pool.with_connection do
       csv_text = open(url)
-      csv = CSV.parse(csv_text, headers: ['company_name', 'job_title', 'url'])
+      csv = CSV.parse(csv_text, headers: ['company_name', 'job_title', 'url', 'job_board_id'])
       csv.each_with_index do |row,index|
         next if index == 0
         createListing(row.to_hash)
@@ -28,14 +28,16 @@ class ImportSpreadsheetJob
         description: listing_params[:description],
         deadline: listing_params[:deadline],
         job_title: listing_params["job_title"],
-        url: listing_params["url"]
+        url: listing_params["url"],
+        job_board_id: listing_params["job_board_id"]
       })
     else
       @listing = Listing.new({
         description: listing_params[:description],
         deadline: listing_params[:deadline],
         job_title: listing_params["job_title"],
-        url: listing_params["url"]
+        url: listing_params["url"],
+        job_board_id: listing_params["job_board_id"]
       })
     end
     if(@listing.save)
