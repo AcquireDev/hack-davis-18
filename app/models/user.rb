@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :applications, dependent: :destroy
 
   has_settings do |s|
-    s.key :job_search, :defaults => { :job_board_id => 0 }
+    s.key :job_search, :defaults => { :job_board_id => 0}
   end
 
   def load_applications

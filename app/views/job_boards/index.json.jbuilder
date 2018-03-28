@@ -1,1 +1,1 @@
-json.array! @listings, :id, :location, :job_type, :position_type
+json.array! @job_boards, :id, :location, :job_type, :position_type
