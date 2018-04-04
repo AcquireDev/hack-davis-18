@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_secure_password # User authentication
-  after_create :load_applications
+  after_commit :load_applications, on: :create
 
   validates :email, uniqueness: true
 
