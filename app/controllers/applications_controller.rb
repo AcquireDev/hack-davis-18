@@ -5,7 +5,7 @@ class ApplicationsController < BaseController
   # GET /applications
   # GET /applications.json
   def index
-    if(application_params.has_key?(:job_board_id))
+    if (application_params.has_key?(:job_board_id))
       applications = authorized_user.applications.joins(:listing).where("listings.job_board_id = ?", application_params[:job_board_id])
     else
       applications = authorized_user.applications
@@ -42,6 +42,7 @@ class ApplicationsController < BaseController
     if @application.update(application_params)
       if application_params.has_key?("applied") && application_params["applied"]
         @application.update_attributes(stage: "applied")
+        MarkAppliedJob.perform_async(@application)
       end
 
       render :show, status: :ok, location: @application
@@ -57,13 +58,14 @@ class ApplicationsController < BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_application
-      @application = Application.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def application_params
-      params.permit(:listing_id, :applied, :status, :notes, :user_id, :new, :stage, :job_board_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_application
+    @application = Application.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def application_params
+    params.permit(:listing_id, :applied, :status, :notes, :user_id, :new, :stage, :job_board_id)
+  end
 end

@@ -23,6 +23,9 @@ gem 'dotenv-rails', groups: [:development, :test]
 # jbuilder
 gem 'jbuilder', github: 'rails/jbuilder'
 
+# Slack
+gem "slack-notifier"
+
 # JWT tokens
 gem 'jwt'
 

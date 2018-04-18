@@ -18,6 +18,7 @@ class UsersController < BaseController
 
     if @user.save
       jwt = Auth.issue(user: @user.id)
+      NewUserJob.perform_async(@user)
       render json: {jwt: jwt}, status: :created
     else
       render json: {msg: "Unable to create user", errors: @user.errors}, status: :unprocessable_entity
@@ -46,13 +47,14 @@ class UsersController < BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.permit(:email, :password, :board_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def user_params
+    params.permit(:email, :password, :board_id)
+  end
 end
