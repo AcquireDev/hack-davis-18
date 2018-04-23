@@ -1,4 +1,4 @@
-class ListingsController < ApplicationController
+class ListingsController < BaseController
   before_action :set_listing, only: [:show, :update, :destroy]
 
   # GET /listings
@@ -51,11 +51,13 @@ class ListingsController < ApplicationController
   # PATCH/PUT /listings/1.json
   def update
     if @listing.update(listing_params)
+      FlagListingAsClosedJob.perform_async(authorized_user, @listing) if(listing_params.has_key?("closed") && listing_params["closed"])
       render :show, status: :ok, location: @listing
     else
       render json: @listing.errors, status: :unprocessable_entity
     end
   end
+
 
   # DELETE /listings/1
   # DELETE /listings/1.json
@@ -71,6 +73,6 @@ class ListingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      params.permit(:job_title, :description, :deadline, :company_id, :company_name, :url, :job_board_id)
+      params.permit(:job_title, :description, :deadline, :company_id, :company_name, :url, :job_board_id, :closed)
     end
 end

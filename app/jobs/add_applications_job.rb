@@ -26,7 +26,7 @@ class AddApplicationsJob
       return unless user
       Listing.find_in_batches do |batch|
         batch.each do |listing|
-          next if(current_listings[listing.id])
+          next if(current_listings[listing.id] || listing.closed)
           app = Application.new(listing_id: listing.id, applied: false, status: "new", notes: "", user_id: user.id)
           app.save
         end
